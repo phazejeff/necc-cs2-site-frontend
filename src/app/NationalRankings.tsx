@@ -87,7 +87,7 @@ const NationalRankings = () => {
           <CardTitle>National Points Standings</CardTitle>
           <div className="flex items-center gap-2 text-sm text-gray-600">
             <Trophy className="text-yellow-500" size={20} />
-            <span>Teams with gold trophy have automatically qualified for nationals</span>
+            <span>Teams with gold trophy have automatically qualified for nationals. <u><a href='https://necc.gg/blogs/news/necc-releases-2024-25-nationals-format-details' target='_blank'>Read more here</a></u></span>
           </div>
         </CardHeader>
         <CardContent>

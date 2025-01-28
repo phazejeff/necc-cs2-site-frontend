@@ -90,6 +90,9 @@ const SeasonRankings = () => {
             <Card>
               <CardHeader>
                 <CardTitle>Group {group} Rankings</CardTitle>
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <span>Tiebreakers go as follows, whichever breaks the tie first: Total match wins, Map win differential, Round win differential, head-to-head record</span>
+                </div>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
