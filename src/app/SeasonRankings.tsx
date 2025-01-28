@@ -29,14 +29,14 @@ const SeasonRankings = () => {
     const fetchData = async () => {
       try {
         // Fetch group amount
-        const groupResponse = await fetch('http://127.0.0.1:5000/groupamount');
+        const groupResponse = await fetch(`${process.env.API_ROOT}/groupamount`);
         const groupData = await groupResponse.json();
         setGroups(groupData.count);
 
         // Fetch rankings for each group
         const rankingsData: { [key: string]: Team[] } = {};
         for (let i = 1; i <= groupData.count; i++) {
-          const response = await fetch(`http://127.0.0.1:5000/seasonrankings/${i}`);
+          const response = await fetch(`${process.env.API_ROOT}/seasonrankings/${i}`);
           const data = await response.json();
           rankingsData[i] = data;
         }

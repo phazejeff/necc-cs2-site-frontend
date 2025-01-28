@@ -33,7 +33,7 @@ const NationalRankings = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const url = `http://127.0.0.1:5000/nationals${hideQualified ? '?ignoreQualified=true' : ''}`;
+        const url = `${process.env.API_ROOT}/nationals${hideQualified ? '?ignoreQualified=true' : ''}`;
         const response = await fetch(url);
         const data = await response.json();
         setRankings(data);
