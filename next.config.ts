@@ -11,7 +11,7 @@ const nextConfig: NextConfig = {
       ]
   },
   env: {
-    API_ROOT : "http://127.0.0.1:5000"
+    API_ROOT : "https://necc.poopdealer.lol/"
   }
 };
 
