@@ -84,11 +84,23 @@ const NationalRankings = () => {
       
       <Card>
         <CardHeader>
-          <CardTitle>National Points Standings</CardTitle>
-          <div className="flex items-center gap-2 text-sm text-gray-600">
-            <Trophy className="text-yellow-500" size={20} />
-            <span>Teams with gold trophy have automatically qualified for nationals. <u><a href='https://necc.gg/blogs/news/necc-releases-2024-25-nationals-format-details' target='_blank'>Read more here</a></u></span>
+          <CardTitle>D2 National Points Standings</CardTitle>
+          <div className="flex items-start gap-2 text-sm text-gray-600">
+          <Trophy className="text-yellow-500" size={20} />
+          <div className="flex flex-col">
+            <span>
+              Teams with gold trophy have automatically qualified for nationals.{' '}
+              <u>
+                <a href="https://necc.gg/blogs/news/necc-releases-2024-25-nationals-format-details" target="_blank">
+                  Read more here
+                </a>
+              </u>
+            </span>
+            <span className="mt-1">
+              Note: Some Fall 2024 D2 teams were moved up to D1 for Spring 2025, so they will not show here.
+            </span>
           </div>
+        </div>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
