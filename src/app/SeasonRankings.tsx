@@ -74,6 +74,10 @@ const SeasonRankings = () => {
     return `${((won / total) * 100).toFixed(1)}%`;
   };
 
+  const getWinDiff = (won: number, lost: number) => {
+    return `${won - lost}`;
+  }
+
   return (
     <div className="container mx-auto p-4">
       <Tabs defaultValue="1">
@@ -120,14 +124,14 @@ const SeasonRankings = () => {
                               <p className="font-medium">Maps</p>
                               <p>{team.record.maps.won}W - {team.record.maps.lost}L</p>
                               <p className="text-gray-500">
-                                {getWinRate(team.record.maps.won, team.record.maps.lost)}
+                                Diff: {getWinDiff(team.record.maps.won, team.record.maps.lost)}
                               </p>
                             </div>
                             <div>
                               <p className="font-medium">Rounds</p>
                               <p>{team.record.rounds.won}W - {team.record.rounds.lost}L</p>
                               <p className="text-gray-500">
-                                {getWinRate(team.record.rounds.won, team.record.rounds.lost)}
+                                Diff: {getWinDiff(team.record.rounds.won, team.record.rounds.lost)}
                               </p>
                             </div>
                           </div>
