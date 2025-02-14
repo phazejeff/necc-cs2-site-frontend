@@ -159,8 +159,8 @@ const SeasonRankings = () => {
                             <div className="flex-shrink-0 w-8">
                               {index === 0 && <Trophy className="text-yellow-500" size={24} />}
                               {index === 1 && <Trophy className="text-gray-400" size={24} />}
-                              {index === 2 && <Trophy className="text-amber-700" size={24} />}
-                              {index === 3 && <Trophy className="text-purple-400" size={24} />}
+                              {index === 2 && <Trophy className="text-amber-600" size={24} />}
+                              {index === 3 && <Trophy className="text-amber-800" size={24} />}
                               {index > 3 && <span className="text-lg font-bold">{index + 1}</span>}
                             </div>
                             
