@@ -20,7 +20,7 @@ const RankingsHeader = () => {
                   : 'hover:bg-muted'
               }`}
             >
-              D2 Season Rankings
+              Season Rankings
             </button>
             <button
               onClick={() => router.push('/rankings/nationals')}
@@ -30,7 +30,7 @@ const RankingsHeader = () => {
                   : 'hover:bg-muted'
               }`}
             >
-              D2 National Rankings
+              National Rankings
             </button>
           </nav>
         </div>

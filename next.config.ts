@@ -11,7 +11,7 @@ const nextConfig: NextConfig = {
       ]
   },
   env: {
-    API_ROOT : "https://necc-api.poopdealer.lol/"
+    API_ROOT : "https://necc-api.poopdealer.lol"
   }
 };
 
