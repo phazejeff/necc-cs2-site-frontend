@@ -139,7 +139,7 @@ const SeasonRankings = () => {
               <Card>
                 <CardHeader>
                   <CardTitle>Division {currentDivision} - Group {currentGroup} Rankings</CardTitle>
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
                     <div className="flex flex-col">
                       <span>Tiebreakers go as follows, whichever breaks the tie first: Total match wins, Map win differential, Round win differential, head-to-head record</span>
                       <span>Top 4 teams go to playoffs</span>
@@ -170,21 +170,21 @@ const SeasonRankings = () => {
                                 <div>
                                   <p className="font-medium">Matches</p>
                                   <p>{team.record.matches.won}W - {team.record.matches.lost}L</p>
-                                  <p className="text-gray-500">
+                                  <p className="text-gray-500 dark:text-gray-400">
                                     {getWinRate(team.record.matches.won, team.record.matches.lost)}
                                   </p>
                                 </div>
                                 <div>
                                   <p className="font-medium">Maps</p>
                                   <p>{team.record.maps.won}W - {team.record.maps.lost}L</p>
-                                  <p className="text-gray-500">
+                                  <p className="text-gray-500 dark:text-gray-400">
                                     Diff: {getWinDiff(team.record.maps.won, team.record.maps.lost)}
                                   </p>
                                 </div>
                                 <div>
                                   <p className="font-medium">Rounds</p>
                                   <p>{team.record.rounds.won}W - {team.record.rounds.lost}L</p>
-                                  <p className="text-gray-500">
+                                  <p className="text-gray-500 dark:text-gray-400">
                                     Diff: {getWinDiff(team.record.rounds.won, team.record.rounds.lost)}
                                   </p>
                                 </div>

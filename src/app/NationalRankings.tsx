@@ -108,7 +108,7 @@ const NationalRankings = () => {
             <Card>
               <CardHeader>
                 <CardTitle>D{division} National Points Standings</CardTitle>
-                <div className="flex items-start gap-2 text-sm text-gray-600">
+                <div className="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-300">
                   <Trophy className="text-yellow-500" size={20} />
                   <div className="flex flex-col">
                     <span>
@@ -150,25 +150,25 @@ const NationalRankings = () => {
                           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                             <div>
                               <p className="font-medium">Fall Season</p>
-                              <p className="text-gray-600">
+                              <p className="text-gray-600 dark:text-gray-300">
                                 Placement: {getPlacementText(ranking.fall_season_placement)}
                               </p>
                             </div>
                             <div>
                               <p className="font-medium">Fall Playoffs</p>
-                              <p className="text-gray-600">
+                              <p className="text-gray-600 dark:text-gray-300">
                                 Placement: {getPlacementText(ranking.fall_playoff_placement)}
                               </p>
                             </div>
                             <div>
                               <p className="font-medium">Spring Season</p>
-                              <p className="text-gray-600">
+                              <p className="text-gray-600 dark:text-gray-300">
                                 Placement: {getPlacementText(ranking.spring_season_placement)}
                               </p>
                             </div>
                             <div>
                               <p className="font-medium">Spring Playoffs</p>
-                              <p className="text-gray-600">
+                              <p className="text-gray-600 dark:text-gray-300">
                                 Placement: {getPlacementText(ranking.spring_playoff_placement)}
                               </p>
                             </div>
