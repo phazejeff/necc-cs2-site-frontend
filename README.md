@@ -1,4 +1,6 @@
 # NECC CS2 Rankings
-This is a site that uses the api from the NECC api repo.
+This is a site that uses the api from my [NECC api repo](https://github.com/phazejeff/necc-cs2-api).
 
-I will not lie, this entire frontend was generated with AI. That shit is absolute bonkers. Frontend devs are so cooked.
+It shows current season ranking data, following the NECC rulebook, along with National points calculations.
+
+Public site available at https://necc.poopdealer.lol
