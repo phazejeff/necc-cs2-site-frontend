@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { usePathname, useRouter } from 'next/navigation';
+import DarkModeToggle from '@/components/ui/darkmode';
 
 const RankingsHeader = () => {
   const router = useRouter();
@@ -10,7 +11,7 @@ const RankingsHeader = () => {
   return (
     <div className="w-full bg-background sticky top-0 z-50 border-b">
       <div className="container mx-auto">
-        <div className="flex h-16 items-center px-4">
+        <div className="flex h-16 items-center justify-between px-4">
           <nav className="flex items-center space-x-4">
             <button
               onClick={() => router.push('/rankings')}
@@ -33,6 +34,10 @@ const RankingsHeader = () => {
               National Rankings
             </button>
           </nav>
+
+          <div className="flex items-center space-x-4">
+            <DarkModeToggle />
+          </div>
         </div>
       </div>
     </div>
