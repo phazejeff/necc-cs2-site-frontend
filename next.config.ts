@@ -12,6 +12,18 @@ const nextConfig: NextConfig = {
   },
   env: {
     API_ROOT : "https://necc-api.poopdealer.lol"
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'distribution.faceit-cdn.net'
+      },
+      {
+        protocol: 'https',
+        hostname: 'assets.faceit-cdn.net'
+      }
+    ]
   }
 };
 
