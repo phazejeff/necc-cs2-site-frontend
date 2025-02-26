@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
+import default_avatar from '../../public/default_avatar.jpg';
 
 // Type definitions
 interface Team {
@@ -127,7 +128,7 @@ const TopPlayersDisplay: React.FC = () => {
             {/* Player avatar */}
             <div className="ml-4 relative">
               <Image 
-                src={player.player.avatar} 
+                src={player.player.avatar != '' ? player.player.avatar : default_avatar} 
                 alt={player.player.nickname}
                 className="w-16 h-16 rounded-full object-cover border-2"
                 width={64}
