@@ -175,7 +175,7 @@ const TopPlayersDisplay: React.FC = () => {
               
               <div className="flex flex-col w-16">
                 <span className="text-xs opacity-75">HS%</span>
-                <span className="text-xl font-bold">{player.headshot_percentage * 100}%</span>
+                <span className="text-xl font-bold">{Math.round(player.headshot_percentage * 100)}%</span>
               </div>
             </div>
           </div>
