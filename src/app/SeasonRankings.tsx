@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Trophy } from 'lucide-react';
@@ -166,7 +167,9 @@ const SeasonRankings = () => {
                             </div>
                             
                             <div className="flex-grow">
-                              <h3 className="text-lg font-semibold">{team.name}</h3>
+                              <Link href={`/team/${team.team_id}`}>
+                                <h3 className="text-lg font-semibold hover:underline cursor-pointer">{team.name}</h3>
+                              </Link>
                               <div className="grid grid-cols-3 gap-4 mt-2 text-sm">
                                 <div>
                                   <p className="font-medium">Matches</p>
