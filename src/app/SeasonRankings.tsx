@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Trophy } from 'lucide-react';
+import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 
 interface TeamRecord {
   maps: { won: number; lost: number };
@@ -20,14 +21,43 @@ interface Team {
   team_id: string;
 }
 
-const SeasonRankings = () => {
+interface SeasonRankingsProps {
+  division: string;
+  group: string;
+}
+
+const SeasonRankings = ({ division, group }: SeasonRankingsProps) => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
   const [divisions, setDivisions] = useState<number>(0);
   const [groupsByDivision, setGroupsByDivision] = useState<{ [key: string]: number }>({});
-  const [currentDivision, setCurrentDivision] = useState("1");
-  const [currentGroup, setCurrentGroup] = useState("1");
+  const [currentDivision, setCurrentDivision] = useState(division);
+  const [currentGroup, setCurrentGroup] = useState(group);
   const [rankings, setRankings] = useState<Team[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set(name, value);
+  
+      return params.toString();
+    },
+    [searchParams]
+  )
+
+  function changeDivision(division: string) {
+    router.push(pathname + '?' + createQueryString('division', division))
+    setCurrentDivision(division)
+  }
+
+  function changeGroup(group: string) {
+    router.push(pathname + '?' + createQueryString('group', group))
+    setCurrentGroup(group)
+  }
 
   // Fetch division and group counts on initial load
   useEffect(() => {
@@ -39,9 +69,12 @@ const SeasonRankings = () => {
         setDivisions(divisionData.count);
 
         // Fetch group amount for the first division
-        const groupResponse = await fetch(`${process.env.API_ROOT}/groupamount/${1}`);
+        const groupResponse = await fetch(`${process.env.API_ROOT}/groupamount/${currentDivision}`);
         const groupData = await groupResponse.json();
-        setGroupsByDivision({ "1": groupData.count });
+        setGroupsByDivision(prev => ({
+          ...prev,
+          [currentDivision]: groupData.count
+        }));
       } catch (err) {
         console.error(err);
         setError('Failed to fetch structure data');
@@ -49,28 +82,6 @@ const SeasonRankings = () => {
     };
 
     fetchStructure();
-  }, []);
-
-  // Fetch group count when division changes
-  useEffect(() => {
-    const fetchGroupCount = async () => {
-      if (!groupsByDivision[currentDivision]) {
-        try {
-          const groupResponse = await fetch(`${process.env.API_ROOT}/groupamount/${currentDivision}`);
-          const groupData = await groupResponse.json();
-          setGroupsByDivision(prev => ({
-            ...prev,
-            [currentDivision]: groupData.count
-          }));
-          setCurrentGroup("1"); // Reset to first group when changing divisions
-        } catch (err) {
-          console.error(err);
-          setError('Failed to fetch group count');
-        }
-      }
-    };
-
-    fetchGroupCount();
   }, [currentDivision]);
 
   // Fetch rankings when division or group changes
@@ -114,7 +125,7 @@ const SeasonRankings = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <Tabs value={currentDivision} onValueChange={setCurrentDivision} className="space-y-4">
+      <Tabs value={currentDivision} onValueChange={changeDivision} className="space-y-4">
         <TabsList className="mb-4">
           {Array.from({ length: divisions }, (_, i) => i + 1).map((division) => (
             <TabsTrigger key={`div-${division}`} value={division.toString()}>
@@ -124,7 +135,7 @@ const SeasonRankings = () => {
         </TabsList>
 
         <TabsContent value={currentDivision}>
-          <Tabs value={currentGroup} onValueChange={setCurrentGroup} className="space-y-4">
+          <Tabs value={currentGroup} onValueChange={changeGroup} className="space-y-4">
             <TabsList className="mb-4">
               {groupsByDivision[currentDivision] && Array.from(
                 { length: groupsByDivision[currentDivision] },
