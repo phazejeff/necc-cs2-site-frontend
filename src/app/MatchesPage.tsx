@@ -192,7 +192,7 @@ const MatchesPage = ({ teamId }: MatchesPageProps) => {
                           const mapWinner = map.winner === thisTeam.team_id;
 
                           return (
-                            <div key={map.map_id} className="bg-gray-50 p-3 rounded-md">
+                            <div key={map.map_id} className="bg-gray-50 dark:bg-zinc-900 p-3 rounded-md">
                               <div className="flex justify-between items-center mb-2">
                                 <div className="flex items-center">
                                   <MapPin size={16} className="mr-1" />
@@ -206,20 +206,20 @@ const MatchesPage = ({ teamId }: MatchesPageProps) => {
                               <div className="grid grid-cols-2 gap-4 text-sm">
                                 <div>
                                   <p className="font-medium">First Half</p>
-                                  <p className="text-gray-600">
+                                  <p className="text-gray-600 dark:text-gray-400">
                                     {isTeam1 ? map.team1_first_half_score : map.team2_first_half_score} - {isTeam1 ? map.team2_first_half_score : map.team1_first_half_score}
                                   </p>
                                 </div>
                                 <div>
                                   <p className="font-medium">Second Half</p>
-                                  <p className="text-gray-600">
+                                  <p className="text-gray-600 dark:text-gray-400">
                                     {isTeam1 ? map.team1_second_half_score : map.team2_second_half_score} - {isTeam1 ? map.team2_second_half_score : map.team1_second_half_score}
                                   </p>
                                 </div>
                                 {(map.team1_overtime_score > 0 || map.team2_overtime_score > 0) && (
                                   <div>
                                     <p className="font-medium">Overtime</p>
-                                    <p className="text-gray-600">
+                                    <p className="text-gray-600 dark:text-gray-400">
                                       {isTeam1 ? map.team1_overtime_score : map.team2_overtime_score} - {isTeam1 ? map.team2_overtime_score : map.team1_overtime_score}
                                     </p>
                                   </div>
