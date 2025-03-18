@@ -120,7 +120,17 @@ const NationalRankings = () => {
                       </u>
                     </span>
                     <span className="mt-1">
-                      Note: If you moved down a division between Fall and Spring (commonly 2 -{'>'} 3), you got a 30% point reduction.
+                      Teams that did not play in Spring will not be shown here.
+                    </span>
+                    <span className="mt-1">
+                      Note: If you moved a division between Fall and Spring (commonly 2 -{'>'} 3 or 2 -{'>'} 1), you got a 30% point reduction.
+                    </span>
+                    <span className="mt-1">
+                      <u>
+                        <a href="https://bit.ly/NECCnatlpts25cs" target="_blank">
+                          View Officially Released Rankings
+                        </a>
+                      </u>
                     </span>
                   </div>
                 </div>
