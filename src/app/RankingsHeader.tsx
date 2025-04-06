@@ -33,6 +33,16 @@ const RankingsHeader = () => {
             >
               National Rankings
             </button>
+            <button
+              onClick={() => router.push('/stats')}
+              className={`px-4 py-2 rounded-md transition-colors ${
+                pathname === '/stats'
+                  ? 'bg-primary text-primary-foreground'
+                  : 'hover:bg-muted'
+              }`}
+            >
+              Regular Season Stats
+            </button>
           </nav>
 
           <div className="flex items-center space-x-4">
