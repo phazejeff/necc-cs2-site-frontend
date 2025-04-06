@@ -25,7 +25,6 @@ interface Player {
   total_damage: number;
   avg_adr: number;
   total_mvps: number;
-
   // Advanced stats
   avg_flash_success_rate: number;
   avg_utility_damage_per_round: number;
@@ -73,7 +72,6 @@ const PlayerAvatar: React.FC<{ avatar: string; nickname: string; defaultAvatar: 
   nickname,
   defaultAvatar,
 }) => {
-  // If there's no avatar string, default right away.
   const [imgSrc, setImgSrc] = useState(avatar || defaultAvatar);
 
   return (
@@ -85,7 +83,6 @@ const PlayerAvatar: React.FC<{ avatar: string; nickname: string; defaultAvatar: 
       height={32}
       className="rounded-full"
       onError={() => {
-        // Only update if the image isn't already the default to avoid an infinite loop
         if (imgSrc !== defaultAvatar) {
           setImgSrc(defaultAvatar);
         }
@@ -103,12 +100,62 @@ const PlayerStats: React.FC = () => {
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const [currentTab, setCurrentTab] = useState<string>("main");
 
+  // States for filters
+  const [divisions, setDivisions] = useState<number[]>([]);
+  const [groups, setGroups] = useState<number[]>([]);
+  const [selectedDivision, setSelectedDivision] = useState<number>(0); // 0 means All Divisions
+  const [selectedGroup, setSelectedGroup] = useState<number>(0); // 0 means All Groups
+
+  // Fetch the total number of divisions when component mounts
+  useEffect(() => {
+    const fetchDivisions = async () => {
+      try {
+        const res = await fetch(`${process.env.API_ROOT}/divisionamount`);
+        const data = await res.json();
+        const divisionNumbers = Array.from({ length: data.count }, (_, i) => i + 1);
+        setDivisions(divisionNumbers);
+      } catch (err) {
+        console.error('Failed to fetch divisions', err);
+      }
+    };
+    fetchDivisions();
+  }, []);
+
+  // Fetch groups when selectedDivision changes
+  useEffect(() => {
+    if (selectedDivision === 0) {
+      setGroups([]);
+      setSelectedGroup(0);
+      return;
+    }
+    const fetchGroups = async () => {
+      try {
+        const res = await fetch(`${process.env.API_ROOT}/groupamount/${selectedDivision}`);
+        const data = await res.json();
+        const groupNumbers = Array.from({ length: data.count }, (_, i) => i + 1);
+        setGroups(groupNumbers);
+        setSelectedGroup(0);
+      } catch (err) {
+        console.error('Failed to fetch groups', err);
+      }
+    };
+    fetchGroups();
+  }, [selectedDivision]);
+
+  // Fetch players when filters change
   useEffect(() => {
     const fetchPlayers = async () => {
       setLoading(true);
       try {
-        // Replace with your actual API endpoint
-        const response = await fetch(`${process.env.API_ROOT}/stats/topplayers`);
+        let url = `${process.env.API_ROOT}/stats/topplayers`;
+
+        if (selectedDivision !== 0) {
+          url = `${process.env.API_ROOT}/stats/topplayers/division/${selectedDivision}`;
+          if (selectedGroup !== 0) {
+            url = `${process.env.API_ROOT}/stats/topplayers/division/${selectedDivision}/group/${selectedGroup}`;
+          }
+        }
+        const response = await fetch(url);
         if (!response.ok) {
           throw new Error('Failed to fetch player data');
         }
@@ -124,7 +171,7 @@ const PlayerStats: React.FC = () => {
     };
 
     fetchPlayers();
-  }, []);
+  }, [selectedDivision, selectedGroup]);
 
   const handleSort = (column: string) => {
     if (sortBy === column) {
@@ -152,7 +199,7 @@ const PlayerStats: React.FC = () => {
     return 0;
   });
 
-  const SortableHeader: React.FC<{column: string, label: string}> = ({column, label}) => (
+  const SortableHeader: React.FC<{ column: string, label: string }> = ({ column, label }) => (
     <th 
       onClick={() => handleSort(column)}
       className="p-3 text-left cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800"
@@ -178,6 +225,43 @@ const PlayerStats: React.FC = () => {
 
   return (
     <div className="container mx-auto p-4">
+      {/* Filter Dropdowns */}
+      <div className="mb-4 flex flex-wrap gap-4">
+        <div>
+          <Label htmlFor="division-select" className="block mb-1">Division</Label>
+          <select
+            id="division-select"
+            value={selectedDivision}
+            onChange={(e) => setSelectedDivision(Number(e.target.value))}
+            className="border rounded p-2 bg-white text-black dark:bg-gray-800 dark:border-gray-600 dark:text-gray-200"
+          >
+            <option value={0}>All Divisions</option>
+            {divisions.map((div) => (
+              <option key={div} value={div}>
+                Division {div}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <Label htmlFor="group-select" className="block mb-1">Group</Label>
+          <select
+            id="group-select"
+            value={selectedGroup}
+            onChange={(e) => setSelectedGroup(Number(e.target.value))}
+            className="border rounded p-2 bg-white text-black dark:bg-gray-800 dark:border-gray-600 dark:text-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={selectedDivision === 0 || groups.length === 0}
+          >
+            <option value={0}>All Groups</option>
+            {groups.map((grp) => (
+              <option key={grp} value={grp}>
+                Group {grp}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+      
       <Tabs value={currentTab} onValueChange={setCurrentTab} className="space-y-4">
         <TabsContent value={currentTab}>
           <Card>
@@ -185,16 +269,39 @@ const PlayerStats: React.FC = () => {
               <CardTitle>Regular Season Statistics</CardTitle>
               <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
                 <div className="flex flex-col">
-                  <span>Rating is a rough estimation of HLTV rating based on <Link href={'https://www.hltv.org/forums/threads/2433094/rating-20'} target='_blank' rel='noopener noreferrer' className='underline'>Brasil&apos;s Formula</Link></span>
+                  <span>
+                    Rating is a rough estimation of HLTV rating based on{" "}
+                    <Link
+                      href={'https://www.hltv.org/forums/threads/2433094/rating-20'}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      className='underline'
+                    >
+                      Brasil&apos;s Formula
+                    </Link>
+                  </span>
                   <span>Click on column headers to sort</span>
                 </div>
               </div>
               <div className="flex items-center space-x-2 mt-2">
+                {/* Custom-styled Switch with dark mode support */}
                 <Switch
                   id="extended-stats"
                   checked={showExtendedStats}
                   onCheckedChange={setShowExtendedStats}
-                />
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 focus:outline-none ${
+                    showExtendedStats
+                      ? 'bg-blue-600 dark:bg-blue-500'
+                      : 'bg-gray-300 dark:bg-gray-700'
+                  }`}
+                >
+                  <span className="sr-only">Show Advanced Statistics</span>
+                  <span
+                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 ${
+                      showExtendedStats ? 'translate-x-6' : 'translate-x-1'
+                    }`}
+                  />
+                </Switch>
                 <Label htmlFor="extended-stats">Show Advanced Statistics</Label>
               </div>
             </CardHeader>
@@ -211,7 +318,7 @@ const PlayerStats: React.FC = () => {
                         <th className="p-3 text-left">Rank</th>
                         <th className="p-3 text-left">Player</th>
                         <th className="p-3 text-left">Team</th>
-                        <th className="p-1 text-left">Division</th>
+                        <th className="p-3 text-left">Division</th>
                         <SortableHeader column="rating" label="Rating" />
                         <SortableHeader column="total_kills" label="Kills" />
                         <SortableHeader column="total_deaths" label="Deaths" />
