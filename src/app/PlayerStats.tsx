@@ -280,13 +280,12 @@ const PlayerStats: React.FC = () => {
                       Brasil&apos;s Formula
                     </Link>
                   </span>
-                  <span>Do not take it as an accurate representation of overall skill</span>
+                  <span>Stats taken directly from Faceit, any non-Faceit games are not included here</span>
                   <span>Playoff games not included here</span>
                   <span>Click on column headers to sort</span>
                 </div>
               </div>
               <div className="flex items-center space-x-2 mt-2">
-                {/* Custom-styled Switch with dark mode support */}
                 <Switch
                   id="extended-stats"
                   checked={showExtendedStats}
@@ -331,6 +330,7 @@ const PlayerStats: React.FC = () => {
                         
                         {showExtendedStats && currentTab === "main" && (
                           <>
+                            <SortableHeader column="total_damage" label="Total Damage" />
                             <SortableHeader column="total_clutch_kills" label="Clutch Kills" />
                             <SortableHeader column="avg_match_entry_rate" label="Entry Rate" />
                             <SortableHeader column="avg_match_entry_success_rate" label="Entry Success" />
@@ -359,7 +359,6 @@ const PlayerStats: React.FC = () => {
                             <SortableHeader column="total_flash_count" label="Total Flash Count" />
                             <SortableHeader column="total_flash_successes" label="Total Flash Successes" />
                             <SortableHeader column="total_headshots" label="Total Headshots" />
-                            <SortableHeader column="total_damage" label="Total Damage" />
                             <SortableHeader column="total_one_v_one_count" label="1v1 Count" />
                             <SortableHeader column="total_one_v_one_wins" label="1v1 Wins" />
                             <SortableHeader column="total_one_v_two_count" label="1v2 Count" />
@@ -408,6 +407,7 @@ const PlayerStats: React.FC = () => {
                           
                           {showExtendedStats && currentTab === "main" && (
                             <>
+                              <td className="p-3">{player.total_damage}</td>
                               <td className="p-3">{player.total_clutch_kills}</td>
                               <td className="p-3">{(player.avg_match_entry_rate * 100).toFixed(1)}%</td>
                               <td className="p-3">{(player.avg_match_entry_success_rate * 100).toFixed(1)}%</td>
@@ -436,7 +436,6 @@ const PlayerStats: React.FC = () => {
                               <td className="p-3">{player.total_flash_count}</td>
                               <td className="p-3">{player.total_flash_successes}</td>
                               <td className="p-3">{player.total_headshots}</td>
-                              <td className="p-3">{player.total_damage}</td>
                               <td className="p-3">{player.total_one_v_one_count}</td>
                               <td className="p-3">{player.total_one_v_one_wins}</td>
                               <td className="p-3">{player.total_one_v_two_count}</td>
