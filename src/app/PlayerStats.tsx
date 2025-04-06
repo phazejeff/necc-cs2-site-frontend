@@ -291,7 +291,7 @@ const PlayerStats: React.FC = () => {
                   id="extended-stats"
                   checked={showExtendedStats}
                   onCheckedChange={setShowExtendedStats}
-                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 focus:outline-none ${
+                  className={`${
                     showExtendedStats
                       ? 'bg-blue-600 dark:bg-blue-500'
                       : 'bg-gray-300 dark:bg-gray-700'
