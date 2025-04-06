@@ -280,6 +280,8 @@ const PlayerStats: React.FC = () => {
                       Brasil&apos;s Formula
                     </Link>
                   </span>
+                  <span>Do not take it as an accurate representation of overall skill</span>
+                  <span>Playoff games not included here</span>
                   <span>Click on column headers to sort</span>
                 </div>
               </div>
