@@ -112,7 +112,7 @@ const NationalRankings = () => {
                   <Trophy className="text-yellow-500" size={20} />
                   <div className="flex flex-col">
                     <span>
-                      Teams with gold trophy have automatically qualified for nationals due to winning playoffs in Fall.{' '}
+                      Teams with gold trophy have automatically qualified for nationals due to winning playoffs in Fall or Spring.{' '}
                       <u>
                         <a href="https://necc.gg/blogs/news/necc-releases-2024-25-nationals-format-details" target="_blank">
                           Read more here
