@@ -167,7 +167,10 @@ const NationalRankings = () => {
                             <div>
                               <p className="font-medium">Fall Playoffs</p>
                               <p className="text-gray-600 dark:text-gray-300">
-                                Placement: {getPlacementText(ranking.fall_playoff_placement)}
+                                Placement: {getPlacementText(ranking.fall_playoff_placement) === 5
+                                  ? "Quarterfinals"
+                                  : getPlacementText(ranking.fall_playoff_placement)
+                                }
                               </p>
                             </div>
                             <div>
@@ -179,7 +182,10 @@ const NationalRankings = () => {
                             <div>
                               <p className="font-medium">Spring Playoffs</p>
                               <p className="text-gray-600 dark:text-gray-300">
-                                Placement: {getPlacementText(ranking.spring_playoff_placement)}
+                              Placement: {getPlacementText(ranking.spring_playoff_placement) === 5
+                                  ? "Quarterfinals"
+                                  : getPlacementText(ranking.spring_playoff_placement)
+                                }
                               </p>
                             </div>
                           </div>
